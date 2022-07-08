@@ -31,6 +31,23 @@ export class ProductService {
         return await createProd.save();
     }
 
+    async updateProduct(id: string, name: string, description: string, price: number) {
+        const product = await this.findProduct(id);
+        const result = await product.updateOne({
+            $set: {
+                name: name ? name : product.name,
+                description: description ? description : product.description,
+                price: price ? price : product.price
+            }
+        });
+
+        if(result.n === 0) {
+            throw new NotFoundException(`${id} not found`);
+        }
+
+        return {message: `${id} has been updated successful`}
+    }
+
     async getProducts() {
         return await this.productModel.find().exec();
     }
