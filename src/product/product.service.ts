@@ -48,6 +48,19 @@ export class ProductService {
         return {message: `${id} has been updated successful`}
     }
 
+    async removeProduct(id: string) {
+        const result = await this.productModel.deleteOne({
+            _id: id
+        }).exec();
+        if(result.n === 0) {
+            throw new NotFoundException(`${id} not found`);
+        }
+
+        return {
+            message: `${id} has been deleted`
+        }
+    }
+
     async getProducts() {
         return await this.productModel.find().exec();
     }
