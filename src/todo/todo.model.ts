@@ -13,6 +13,9 @@ export class Todo {
 
     @Prop( { required: true } )
     createdAt: Date;
+
+    @Prop()
+    chengedAt?: Date;
 }
 
 export const TodoSchema = SchemaFactory.createForClass(Todo);
